@@ -1,60 +1,59 @@
 # FAISS Semantic Search Engine
 
-A mini semantic search engine built using Python, Sentence Transformers, and FAISS. The project generates embeddings for a small knowledge base and retrieves the most relevant sentences based on the semantic meaning of a user's query.
+A mini semantic search engine built using Python, Sentence Transformers, and FAISS.
 
-## Objective
-
-The objective of this project is to understand the core retrieval process used in semantic search and Retrieval-Augmented Generation (RAG) systems.
-
-The project demonstrates how to:
-
-- Generate sentence embeddings
-- Store embeddings in a FAISS vector index
-- Perform similarity search
-- Retrieve the Top 3 most relevant results
-- Build an interactive command-line search interface
+The system converts knowledge base sentences into vector embeddings and uses FAISS to retrieve the Top 3 most semantically relevant results for a user's query.
 
 ---
 
-## Technologies Used
+## Objective
 
-- Python
-- Sentence Transformers
-- all-MiniLM-L6-v2
-- FAISS
-- NumPy
-- Jupyter Notebook
+The objective of this project is to understand how semantic search and the retrieval layer of Retrieval-Augmented Generation (RAG) systems work.
+
+This project demonstrates:
+
+- Text embedding generation
+- Vector normalization
+- FAISS vector indexing
+- Semantic similarity search
+- Top-K retrieval
+- Interactive query searching
 
 ---
 
 # Project Workflow
 
+The following diagram represents the complete semantic search pipeline:
+
 ```text
 Knowledge Base Sentences
           ↓
-SentenceTransformer Model
+Generate Embeddings
           ↓
-384-Dimensional Embeddings
+384-Dimensional Vectors
           ↓
 L2 Normalization
           ↓
-FAISS IndexFlatL2
+FAISS Vector Index
           ↓
-User Query
+─────────────────────────
           ↓
-Query Embedding
+       User Query
+          ↓
+Generate Query Embedding
+          ↓
+L2 Normalization
           ↓
 FAISS Similarity Search
           ↓
 Top 3 Relevant Results
-
 
 Tasks Completed
 Task 1: Setup and Embedding Generation
 
 A knowledge base containing 10 customer support-related sentences was created.
 
-The sentences cover topics such as:
+The knowledge base covers topics such as:
 
 Password reset
 Billing information
@@ -63,77 +62,112 @@ Login issues
 Account management
 Unauthorized charges
 
-The all-MiniLM-L6-v2 model was used to convert each sentence into a 384-dimensional embedding.
+The all-MiniLM-L6-v2 Sentence Transformer model was used to convert each sentence into a numerical embedding.
+
+Each sentence is represented as a 384-dimensional vector.
 
 Example output:
 
 Embedding matrix shape: (10, 384)
-Task 2: Build a FAISS Index
+Task 2: Build the FAISS Index
 
-The generated embeddings were converted to float32 and normalized using:
+The generated embeddings were prepared for FAISS by:
+
+Converting the embeddings to float32
+Normalizing the embeddings using L2 normalization
+Creating a FAISS IndexFlatL2 index
+Adding all embeddings to the index
+
+Example:
 
 faiss.normalize_L2(embeddings)
 
-A FAISS IndexFlatL2 index was created:
-
 index = faiss.IndexFlatL2(384)
 
-All knowledge base embeddings were added to the index.
+index.add(embeddings)
 
-Example output:
+The total number of vectors stored:
 
 Total vectors stored in FAISS: 10
 Task 3: Semantic Search
 
-A user query is converted into an embedding using the same Sentence Transformer model.
+A user query is converted into an embedding using the same all-MiniLM-L6-v2 model.
 
-The query embedding is normalized and searched against the FAISS index.
+The query embedding is then normalized and searched against the FAISS index.
 
-The system retrieves the Top 3 nearest results and displays:
+The system retrieves the Top 3 nearest knowledge base sentences.
+
+Results are displayed in the following format:
 
 Rank | Score | Matched Sentence
 
-Multiple queries were tested, including password, billing, and login-related questions.
+Three different queries were tested to demonstrate semantic search across topics such as password management, billing, and login issues.
 
-Note: Since IndexFlatL2 is used, the returned values are L2 distances. Lower distances indicate closer matches.
+Note: Since IndexFlatL2 is used, the returned values represent L2 distances. A lower distance indicates a closer match.
 
 Task 4: Interactive CLI
 
-An interactive loop allows users to continuously enter search queries.
+An interactive command-line interface allows users to enter queries continuously.
+
+For every query, the system:
+
+Generates a query embedding
+Normalizes the embedding
+Searches the FAISS index
+Retrieves the Top 3 results
 
 Example:
 
 Enter your query (or type 'exit' to quit):
 
-For each query, the system retrieves and displays the Top 3 relevant sentences.
-
 The user can type:
 
 exit
 
-to stop the program.
+to terminate the program.
 
 Task 5: Reflection Questions
 
-The REFLECTION.md file contains answers to the following questions:
+The theoretical concepts and reflection answers are documented separately in:
 
-What is the difference between IndexFlatL2 and IndexFlatIP?
-Why are embeddings normalized when cosine similarity is required?
-What does Approximate Nearest Neighbour (ANN) search mean, and why is it useful?
+REFLECTION.md
+
+The file covers:
+
+The difference between IndexFlatL2 and IndexFlatIP
+Why embeddings are normalized for cosine similarity
+Approximate Nearest Neighbour (ANN) search and its importance
+Technologies Used
+Python
+Sentence Transformers
+all-MiniLM-L6-v2
+FAISS
+NumPy
+Jupyter Notebook
 Project Structure
 faiss-semantic-search/
 │
 ├── FAISS_Semantic_Search.ipynb
+├── README.md
 ├── REFLECTION.md
 ├── requirements.txt
-└── README.md
+└── .gitignore
 Installation
 
-Clone the repository and navigate to the project directory.
+Clone the repository:
 
-Create and activate a virtual environment:
+git clone <repository-url>
+
+Navigate to the project directory:
+
+cd faiss-semantic-search
+
+Create a virtual environment:
 
 python3 -m venv .venv
+
+Activate the virtual environment:
+
 source .venv/bin/activate
 
 Install the required dependencies:
@@ -152,20 +186,21 @@ Generate embeddings
 Build the FAISS index
 Perform semantic search
 Test multiple queries
-Use the interactive search interface
+Run the interactive CLI
 Key Learning
 
-This project demonstrates the retrieval layer used in modern RAG systems.
+This project demonstrates the fundamental retrieval pipeline used in semantic search and RAG systems:
 
 Text
  ↓
-Embeddings
+Embedding Model
  ↓
-Vector Database / FAISS
+Vector Representation
+ ↓
+FAISS Vector Store
  ↓
 Similarity Search
  ↓
-Relevant Information
+Relevant Results
 
-Unlike traditional keyword search, semantic search compares the meaning of text using vector embeddings.
-
+Unlike traditional keyword-based search, semantic search retrieves information based on the meaning and context of the user's query.
