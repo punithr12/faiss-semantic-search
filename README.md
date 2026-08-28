@@ -47,7 +47,7 @@ L2 Normalization
 FAISS Similarity Search
           ↓
 Top 3 Relevant Results
-
+'''
 Tasks Completed
 Task 1: Setup and Embedding Generation
 
