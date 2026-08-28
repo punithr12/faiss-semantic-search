@@ -1,53 +1,44 @@
-# FAISS Semantic Search Engine
+FAISS Semantic Search Engine
 
 A mini semantic search engine built using Python, Sentence Transformers, and FAISS.
 
-The system converts knowledge base sentences into vector embeddings and uses FAISS to retrieve the Top 3 most semantically relevant results for a user's query.
+This project demonstrates how text can be converted into vector embeddings and searched based on semantic meaning rather than exact keyword matches.
 
----
+Objective
 
-## Objective
+The objective of this project is to understand the core retrieval process used in Semantic Search and Retrieval-Augmented Generation (RAG) systems.
 
-The objective of this project is to understand how semantic search and the retrieval layer of Retrieval-Augmented Generation (RAG) systems work.
+The project demonstrates how to:
 
-This project demonstrates:
+Generate embeddings from text
+Normalize vector embeddings
+Store embeddings in a FAISS index
+Perform similarity search
+Retrieve the Top 3 most relevant results
+Build an interactive command-line search interface
+Project Workflow
 
-- Text embedding generation
-- Vector normalization
-- FAISS vector indexing
-- Semantic similarity search
-- Top-K retrieval
-- Interactive query searching
+The semantic search process follows this pipeline:
 
----
-
-# Project Workflow
-
-The following diagram represents the complete semantic search pipeline:
-
-```text
 Knowledge Base Sentences
-          ↓
+        ↓
 Generate Embeddings
-          ↓
+        ↓
 384-Dimensional Vectors
-          ↓
+        ↓
 L2 Normalization
-          ↓
+        ↓
 FAISS Vector Index
-          ↓
-─────────────────────────
-          ↓
-       User Query
-          ↓
+
+User Query
+        ↓
 Generate Query Embedding
-          ↓
+        ↓
 L2 Normalization
-          ↓
+        ↓
 FAISS Similarity Search
-          ↓
+        ↓
 Top 3 Relevant Results
-'''
 Tasks Completed
 Task 1: Setup and Embedding Generation
 
@@ -62,19 +53,19 @@ Login issues
 Account management
 Unauthorized charges
 
-The all-MiniLM-L6-v2 Sentence Transformer model was used to convert each sentence into a numerical embedding.
+The all-MiniLM-L6-v2 model from Sentence Transformers was used to convert each sentence into a numerical vector representation.
 
-Each sentence is represented as a 384-dimensional vector.
+Each sentence is represented as a 384-dimensional embedding.
 
 Example output:
 
 Embedding matrix shape: (10, 384)
 Task 2: Build the FAISS Index
 
-The generated embeddings were prepared for FAISS by:
+The generated embeddings were prepared for similarity search by:
 
-Converting the embeddings to float32
-Normalizing the embeddings using L2 normalization
+Converting embeddings to float32
+Applying L2 normalization
 Creating a FAISS IndexFlatL2 index
 Adding all embeddings to the index
 
@@ -86,57 +77,61 @@ index = faiss.IndexFlatL2(384)
 
 index.add(embeddings)
 
-The total number of vectors stored:
+The index stores all 10 knowledge base vectors.
+
+Example output:
 
 Total vectors stored in FAISS: 10
 Task 3: Semantic Search
 
-A user query is converted into an embedding using the same all-MiniLM-L6-v2 model.
+For semantic search:
 
-The query embedding is then normalized and searched against the FAISS index.
-
-The system retrieves the Top 3 nearest knowledge base sentences.
+The user enters a query.
+The query is converted into an embedding using the same model.
+The query embedding is normalized.
+FAISS compares the query vector with the stored vectors.
+The Top 3 most relevant sentences are returned.
 
 Results are displayed in the following format:
 
 Rank | Score | Matched Sentence
 
-Three different queries were tested to demonstrate semantic search across topics such as password management, billing, and login issues.
+The system was tested using multiple queries related to password issues, billing, and login problems.
 
-Note: Since IndexFlatL2 is used, the returned values represent L2 distances. A lower distance indicates a closer match.
+Note: Since IndexFlatL2 is used, the returned values represent L2 distances. Lower values indicate closer matches.
 
 Task 4: Interactive CLI
 
-An interactive command-line interface allows users to enter queries continuously.
+The project includes an interactive search loop that allows users to continuously enter queries.
 
 For every query, the system:
 
 Generates a query embedding
 Normalizes the embedding
 Searches the FAISS index
-Retrieves the Top 3 results
+Displays the Top 3 relevant results
 
 Example:
 
 Enter your query (or type 'exit' to quit):
 
-The user can type:
+Typing:
 
 exit
 
-to terminate the program.
+terminates the program.
 
 Task 5: Reflection Questions
 
-The theoretical concepts and reflection answers are documented separately in:
+The theoretical questions and answers are documented separately in:
 
 REFLECTION.md
 
-The file covers:
+The reflection covers:
 
 The difference between IndexFlatL2 and IndexFlatIP
 Why embeddings are normalized for cosine similarity
-Approximate Nearest Neighbour (ANN) search and its importance
+What Approximate Nearest Neighbour (ANN) search means and why it is useful
 Technologies Used
 Python
 Sentence Transformers
@@ -156,7 +151,7 @@ Installation
 
 Clone the repository:
 
-git clone <repository-url>
+git clone https://github.com/punithr12/faiss-semantic-search.git
 
 Navigate to the project directory:
 
@@ -189,7 +184,7 @@ Test multiple queries
 Run the interactive CLI
 Key Learning
 
-This project demonstrates the fundamental retrieval pipeline used in semantic search and RAG systems:
+This project demonstrates the basic retrieval pipeline used in semantic search and RAG systems:
 
 Text
  ↓
@@ -197,10 +192,10 @@ Embedding Model
  ↓
 Vector Representation
  ↓
-FAISS Vector Store
+FAISS Vector Index
  ↓
 Similarity Search
  ↓
 Relevant Results
 
-Unlike traditional keyword-based search, semantic search retrieves information based on the meaning and context of the user's query.
+Unlike traditional keyword-based search, semantic search retrieves results based on the meaning and context of the user's query.
