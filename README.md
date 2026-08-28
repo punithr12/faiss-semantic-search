@@ -145,20 +145,17 @@ The reflection covers:
 - NumPy
 - Jupyter Notebook
 
----
-
 ## Project Structure
 
+```text
 faiss-semantic-search/
-│
 ├── FAISS_Semantic_Search.ipynb
 ├── README.md
 ├── REFLECTION.md
 ├── requirements.txt
-└── .gitignore
-
----
-
+├── .gitignore
+└── .venv/
+```
 ## Installation
 
 Clone the repository:
