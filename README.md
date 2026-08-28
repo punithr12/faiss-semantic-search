@@ -67,10 +67,13 @@ Each sentence is represented as a 384-dimensional embedding.
 
 Example output:
 
+Example output:
+
 ```text
 Embedding matrix shape: (10, 384)
-
+```
 ### Task 2: Build the FAISS Index
+
 
 The generated embeddings were prepared for similarity search by:
 
@@ -90,7 +93,7 @@ index.add(embeddings)
 ```text
 Total vectors stored in FAISS: 10
 
-
+```
 ### Task 3: Semantic Search
 
 A user query is converted into an embedding using the same `all-MiniLM-L6-v2` model.
@@ -101,7 +104,7 @@ The results are displayed in the following format:
 
 ```text
 Rank | Score | Matched Sentence
-
+```
 
 ### Task 4: Interactive CLI
 
@@ -120,7 +123,7 @@ Example:
 
 ```text
 Enter your query (or type 'exit' to quit):
-
+```
 ### Task 5: Reflection Questions
 
 The theoretical questions and answers are documented separately in the `REFLECTION.md` file.
